@@ -6,8 +6,8 @@ git 'https://github.com/SyamiliV/Devops-project.git'
 }
 
 stage ( 'Build') {
-
-sh 'mvn package'
+def mvnhome = tool name: 'M2_HOME', type: 'maven'
+  sh "${mvnhome}/bin/mvn package"
 }
 
 }
