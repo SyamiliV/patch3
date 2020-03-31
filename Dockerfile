@@ -1,4 +1,4 @@
-# Pull base images
+# Pull base images from dockerhub
 From tomcat:8-jre8 
 
 #@`` Maintainer 
