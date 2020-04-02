@@ -14,8 +14,7 @@ stage ('build') {
 stage ( 'Push war file to docker server') { 	
 	
 	
-sshPublisher(publishers: [sshPublisherDesc(configName: 'dockerserver', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: '/webapp/target', sourceFiles: '/opt/git/sam/Devops-project/webapp/target/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])	
-	
+sshPublisher(publishers: [sshPublisherDesc(configName: 'dockerserver', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: 'webapp/target', sourceFiles: '**/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])	
 	
 	
 	
