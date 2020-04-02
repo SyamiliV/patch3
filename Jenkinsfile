@@ -4,12 +4,22 @@ stage ('source') {
     
     git 'https://github.com/SyamiliV/Devops-project.git'
 }
-stage ('build') {
+
+	
+
+		
+		stage ('build') {
+			try {
     
     def maven_home = tool name: 'M2_HOME', type: 'maven'
-    sh "${maven_home}/bin/mvn clean install package"
+    sh "${maven_home}/mvn clean install package"
     
 }
+	}
+		catchError(message: 'build failure') {
+    emailext body: 'build failed', subject: 'build failed', to: 'syamilivijay@gmail.com'
+}
+
  
 stage ( 'Push war file to docker server  ') { 	
 	
