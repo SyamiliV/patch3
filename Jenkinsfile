@@ -10,13 +10,19 @@ stage ('build') {
     sh "${maven_home}/bin/mvn clean install package"
     
 }
-    
-stage ( 'Push war file to docker server') { 	
+ 
+stage ( 'Push war file to docker server  ') { 	
 	
 	
-sshPublisher(publishers: [sshPublisherDesc(configName: 'dockerserver', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: 'webapp/target', sourceFiles: '**/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])	
+sshPublisher(publishers: [sshPublisherDesc(configName: 'dockerserver', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: '/webapp/target', sourceFiles: '/opt/git/sam/Devops-project/webapp/target/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])	
+	
+	}
 	
 	
-	
-	
-}}	
+stage ( 'Docker build and deploy' ) { 
+        
+    sshPublisher(publishers: [sshPublisherDesc(configName: 'dockerserver', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'docker stop "dockercontainers";docker rm "dockercontainers";docker rmi -f dockerimage;docker build -t dockerimage .;docker run -it -d --name "dockercontainers" -p 8888:8080 dockerimage', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])    
+        
+
+}
+}
