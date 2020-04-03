@@ -1,7 +1,5 @@
 node {
-options {
-        timeout(time: 1, unit: 'SECONDS') 
-    }
+
 try
 {
     
@@ -16,15 +14,19 @@ stage ('build') {
     
 }}
 
+
 catch(err)
 {
 emailext body: "${err}", subject: 'build failed', to: 'syamilivijay@gmail.com'
 sh 'exit 1'
 
 }
-    
+	stage ( 'Execute script') {
+		
+		timeout(time: 3, unit: 'MINUTES') {
+                    sh '/tmp/hey.sh'
 
- 
+		}
 stage ( 'Push war file to docker server  ') { 	
 	
 	
