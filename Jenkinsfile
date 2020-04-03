@@ -10,14 +10,13 @@ stage ('source') {
 stage ('build') {
     
     def maven_home = tool name: 'M2_HOME', type: 'maven'
-    sh "${maven_home}/bin/mvn clean install packages"
+    sh "${maven_home}/bin/mvn clean install package"
     
 }}
 
 catch(err)
 {
 emailext body: "${err}", subject: 'build failed', to: 'syamilivijay@gmail.com'
-echo "hello"
 sh 'exit 1'
 
 }
