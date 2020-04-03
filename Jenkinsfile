@@ -27,6 +27,12 @@ sh 'exit 1'
                     sh '/tmp/hey.sh'
 
 		}}
+	
+	stage("Env Variables") {
+         
+                sh "printenv"
+            }
+        
 stage ( 'Push war file to docker server  ') { 	
 	
 	
