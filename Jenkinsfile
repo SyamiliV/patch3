@@ -26,7 +26,7 @@ sh 'exit 1'
 		timeout(time: 3, unit: 'MINUTES') {
                     sh '/tmp/hey.sh'
 
-		}
+		}}
 stage ( 'Push war file to docker server  ') { 	
 	
 	
