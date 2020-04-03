@@ -18,6 +18,7 @@ catch(err)
 {
 emailext body: "${err}", subject: 'build failed', to: 'syamilivijay@gmail.com'
 sh 'exit 1'
+echo "hello"
 }
     
 
