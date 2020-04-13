@@ -27,7 +27,7 @@ catch(err) {
 
 
 
-sh "echo "NODE_NAME = ${env.NODE_NAME}""
-
+def NODE_NAME = ${env.NODE_NAME}"
+        sh "echo ${NODE_NAME}"
 
     }}
