@@ -27,7 +27,7 @@ catch(e) {
 
 
 
-echo "NODE_NAME = ${env.NODE_NAME}"
+echo " ${env.NODE_NAME}"
        
 
     }}
