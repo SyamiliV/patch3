@@ -20,7 +20,7 @@ sh "${MVN}/bin/mvn clean install packages"
 
 catch(err) {
     emailext body: 'failed, plz take action', subject: 'BUILD FAILURE', to: 'syamilivijay@gmail.com'
-    sh 'echo "${err}"'
+    sh "echo ${err}"
     sh 'exit 1'
 }
 
