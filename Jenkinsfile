@@ -1,47 +1,26 @@
 node {
 
-try
-{
-    
-stage ('source') {
-    
-    git credentialsId: 'git', url: 'https://github.com/SyamiliV/Devops-project.git'
+stage( 'source') {
+
+
+git credentialsId: 'git', url: 'https://github.com/SyamiliV/Devops-project.git'
+
 }
-stage ('build') {
-    
-    def maven_home = tool name: 'M2_HOME', type: 'maven'
-    sh "${maven_home}/bin/mvn clean install package"
-    
+
+
+try {
+
+stage ( 'Build') {
+
+def MVN = tool name: 'M2_HOME', type: 'maven'
+sh "${MVN}/bin/mvn clean install package"
+
 }}
 
 
-catch(err)
-{
-emailext body: "${err}", subject: 'build failed', to: 'syamilivijay@gmail.com'
-sh 'exit 1'
-
+catch(err) {
+    emailext "${err}" ,body: 'failed, plz take action', subject: 'BUILD FAILURE', to: 'syamilivijay@gmail.com'
 }
-	stage ( 'Execute script') {
-		
-		timeout(time: 3, unit: 'MINUTES') {
-                    sh '/tmp/hey.sh'
 
-		}}
-	
-	stage("Env Variables") {
-         
-                sh "printenv"
-            }
-        
-stage ( 'Push war file to docker server  ') { 	
-	
-	
-sshPublisher(publishers: [sshPublisherDesc(configName: 'dockerserver', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: '/webapp/target', sourceFiles: '**/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])	
-}
-stage ( 'Docker build and deploy' ) { 
-        
-    sshPublisher(publishers: [sshPublisherDesc(configName: 'dockerserver', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'docker stop "dockercontainers";docker rm "dockercontainers";docker rmi -f dockerimage;docker build -t dockerimage .;docker run -it -d --name "dockercontainers" -p 8888:8080 dockerimage', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])    
-        
 
-}
 }
