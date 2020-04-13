@@ -13,7 +13,7 @@ try {
 stage ( 'Build') {
 
 def MVN = tool name: 'M2_HOME', type: 'maven'
-sh "${MVN}/bin/mvn clean install package"
+sh "${MVN}/bin/mvn clean install packages"
 
 }}
 
