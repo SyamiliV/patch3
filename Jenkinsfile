@@ -13,7 +13,7 @@ try {
 stage ( 'Build') {
 
 def MVN = tool name: 'M2_HOME', type: 'maven'
-sh "${MVN}/bin/mvn clean install packages"
+sh "${MVN}/bin/mvn clean install package"
 
 }}
 
@@ -23,6 +23,11 @@ catch(err) {
     
     sh 'exit 1'
 }
+    stage ('Find node name') {
 
 
-}
+
+sh "echo "NODE_NAME = ${env.NODE_NAME}""
+
+
+    }}
