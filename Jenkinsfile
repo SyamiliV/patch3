@@ -30,4 +30,13 @@ catch(e) {
 echo " ${env.NODE_NAME}"
        
 
-    }}
+    }
+ 
+    stage ( " ALL environmenat veraibbles") {
+        
+     sh 'printenv'
+        echo " tHIS build number is ${env.BUILDNUMBER}"
+        
+    }
+    
+}
