@@ -5,7 +5,7 @@ try
     
 stage ('source') {
     
-    git 'https://github.com/SyamiliV/Devops-project.git'
+    git credentialsId: 'git', url: 'https://github.com/SyamiliV/Devops-project.git'
 }
 stage ('build') {
     
