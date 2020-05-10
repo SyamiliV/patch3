@@ -1,4 +1,4 @@
-node (master){
+node ('master'){
 
 stage( 'source') {
 
@@ -18,8 +18,8 @@ sh "${MVN}/bin/mvn clean install package"
 }}
 
 
-catch(err) {
-    emailext body: "${err}", subject: 'BUILD FAILURE', to: 'syamilivijay@gmail.com'
+catch(e) {
+    throw e
     
     sh 'exit 1'
 }
@@ -27,7 +27,16 @@ catch(err) {
 
 
 
-echo "NODE_NAME = ${env.NODE_NAME}"
+echo " ${env.NODE_NAME}"
        
 
-    }}
+    }
+ 
+    stage ( " ALL environmenat veraibbles") {
+        
+     sh 'printenv'
+        echo " tHIS build number is ${env.BUILD_NUMBER}"
+        
+    }
+    
+}
